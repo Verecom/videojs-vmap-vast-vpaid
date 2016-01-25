@@ -1,11 +1,13 @@
-# videojs-vast-vpaid plugin
+# videojs-vmap-vast-vpaid plugin
 [![Build Status](https://travis-ci.org/MailOnline/videojs-vast-vpaid.svg?branch=master)](https://travis-ci.org/MailOnline/videojs-vast-vpaid)
 [![Code Climate](https://codeclimate.com/github/MailOnline/videojs-vast-vpaid/badges/gpa.svg)](https://codeclimate.com/github/MailOnline/videojs-vast-vpaid)
 [![Test Coverage](https://codeclimate.com/github/MailOnline/videojs-vast-vpaid/badges/coverage.svg)](https://codeclimate.com/github/MailOnline/videojs-vast-vpaid/coverage)
 
-This plugin allows videojs to monetise its videos. To do so, it implements the [VAST](http://www.iab.net/media/file/VASTv3.0.pdf) and [VPAID](http://www.iab.net/media/file/VPAID_2.0_Final_04-10-2012.pdf) specifications from IAB.
+This plugin allows videojs to monetise its videos. To do so, it implements the [VMAP](http://www.iab.com/wp-content/uploads/2015/06/VMAP.pdf), the [VAST](http://www.iab.net/media/file/VASTv3.0.pdf) and [VPAID](http://www.iab.net/media/file/VPAID_2.0_Final_04-10-2012.pdf) specifications from IAB.
 
 Currently we support VAST and VPAID [Flash](https://github.com/MailOnline/VPAIDFLASHClient) and [HTML5](https://github.com/MailOnline/VPAIDHTML5Client) preroll ads, we will add more VAST ad types as we need them.
+
+Sponsored by [<img src="https://www.browserstack.com/images/mail/browserstack-logo-footer.png">](https://www.browserstack.com)
 
 #### [DEMO HERE!!!](http://mailonline.github.io/videojs-vast-vpaid)
 
@@ -14,7 +16,7 @@ Currently we support VAST and VPAID [Flash](https://github.com/MailOnline/VPAIDF
 ## Integration with video.js 4 and 5
 To integrate the plugin with videoJs you need to:
 
-**1- Add [all files from bin][MailOnline/videojs-vast-vpaid/RELEASE/bin] to some path in your server**
+**1- Add [all files from bin][Verecom/videojs-vmap-vast-vpaid/RELEASE/bin] to some path in your server**
 
 **2- If you don't have videoJs, add it's scripts and stylesheet to your page**
 ```html
@@ -301,12 +303,12 @@ Trigger the 'vast.reset' event whenever you want to reset the plugin. Beware tha
 ## Running the plugin
 If you want to run the plugin you need to clone the repo into your local environment
 ```
-git clone git@github.com:MailOnline/videojs-vast-vpaid.git
+git clone git@github.com:Verecom/videojs-vmap-vast-vpaid.git
 ```
 and install the dependencies
 
 ```
-$ cd videojs-vast-vpaid
+$ cd videojs-vmap-vast-vpaid
 $ npm install
 $ bower install
 ```
@@ -315,13 +317,13 @@ after installing the dependencies you are ready to go. If you want to see the av
 ```
 $ gulp
 
-Welcome to MailOnline's new
-____   ____.__     .___                     __          ____   ____                  __    ____   ____                .__     .___
-\   \ /   /|__|  __| _/  ____    ____      |__|  ______ \   \ /   /_____     _______/  |_  \   \ /   /______  _____   |__|  __| _/
- \   Y   / |  | / __ | _/ __ \  /  _ \     |  | /  ___/  \   Y   / \__  \   /  ___/\   __\  \   Y   / \____ \ \__  \  |  | / __ |
-  \     /  |  |/ /_/ | \  ___/ (  <_> )    |  | \___ \    \     /   / __ \_ \___ \  |  |     \     /  |  |_> > / __ \_|  |/ /_/ |
-   \___/   |__|\____ |  \___  > \____/ /\__|  |/____  >    \___/   (____  //____  > |__|      \___/   |   __/ (____  /|__|\____ |
-                    \/      \/         \______|     \/                  \/      \/                    |__|         \/          \/
+Welcome to Verecom's new
+____   ____.__    .___                ____.      ____   ____                 ____   ____                __ ____   ____            .__    .___
+\   \ /   /|__| __| _/__________     |    | _____\   \ /   /____ _____  _____\   \ /   /____    _______/  |\   \ /   /__________  |__| __| _/
+ \   Y   / |  |/ __ |/  ___/  _ \    |    |/  ___/\   Y   /     \\__  \ \____ \   Y   /\__  \  /  ___/\   __\   Y   /\____ \__  \ |  |/ __ | 
+  \     /  |  / /_/ |\___ (  <_> )\__|    |\___ \  \     /  Y Y  \/ __ \|  |_> >     /  / __ \_\___ \  |  |  \     / |  |_> > __ \|  / /_/ | 
+   \___/   |__\____ /____  >____/\________/____  >  \___/|__|_|  (____  /   __/ \___/  (____  /____  > |__|   \___/  |   __(____  /__\____ | 
+                   \/    \/                    \/              \/     \/|__|                \/     \/                |__|       \/        \/ 
 
 ###### Below, you have the list of all the available build tasks ########
 ╔═════════════════════════╤════════════════════════════════════════════════════════════════════════════════╗
@@ -359,4 +361,6 @@ http://localhost:8086
 
 videojs-vast-vpaid plugin is licensed under the MIT License, Version 2.0. [View the license file](LICENSE)
 
-Copyright (c) 2015 MailOnline
+Original work Copyright (c) 2015 MailOnline
+
+Modified work Copyright (c) 2016 Verecom

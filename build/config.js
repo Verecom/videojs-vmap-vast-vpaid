@@ -61,7 +61,7 @@ module.exports = {
   options: options,
   env: options.env,
   git: {
-    remoteUrl: process.env.GH_TOKEN ? 'https://'+process.env.GH_TOKEN+'@github.com/MailOnline/videojs-vast-vpaid' : 'origin'
+    remoteUrl: process.env.GH_TOKEN ? 'https://'+process.env.GH_TOKEN+'@github.com/Verecom/videojs-vmap-vast-vpaid' : 'origin'
   },
 
   DIST: path.normalize('__dirname/../bin'),

@@ -1,13 +1,15 @@
 {
-  "name": "videojs-vast-vpaid",
+  "name": "videojs-vmap-vast-vpaid",
   "version": "0.0.0",
   "authors": [
-    "Carlos Serrano <carlos.pastor@mailonline.co.uk>"
+    "Carlos Serrano <carlos.pastor@mailonline.co.uk>",
+    "Stayman Hou <s.hou@verecom.com>",
+    "Yong Zhao <y.zhao@verecom.com>"
   ],
-  "description": "VAST plugin to use with video.js",
+  "description": "VMAP VAST plugin to use with video.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MailOnline/videojs-vast-vpaid"
+    "url": "https://github.com/Verecom/videojs-vmap-vast-vpaid"
   },
   "main": [
     "bin/videojs-vast-vpaid.min.js",
