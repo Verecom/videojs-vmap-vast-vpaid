@@ -39,9 +39,9 @@ describe("VMAP XML", function(){
   '</vmap:VMAP>';
   
   it("version should be 1.0", function(){
-    parseString(sampleVmapXmlString,function (err, result) {
+    parseString(sampleVmapXmlString, function (err, result) {
       expect(result["vmap:VMAP"]["$"]["version"]).to.be.equal("1.0");
-      //console.dir(result["vmap:VMAP"]["$"]["vmap:AdBreak"]);
+      console.dir(result["vmap:VMAP"]);
     });
   });
 });
