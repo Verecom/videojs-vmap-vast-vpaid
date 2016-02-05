@@ -64,6 +64,6 @@ VMAPClient.prototype.buildAdBreakTimeLine = function(vmapObj, callback){
     this.adBreaksDict = result;
     callback(null, result);
   }
-}
+};
 
 module.exports = VMAPClient;
