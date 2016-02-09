@@ -328,7 +328,7 @@ playerUtils.prepareForAds = function (player) {
 
   function restoreContentVolume() {
     if (volumeSnapshot) {
-      player.currentTime(0);
+      // player.currentTime(0);
       restoreVolumeSnapshot(volumeSnapshot);
       volumeSnapshot = null;
     }

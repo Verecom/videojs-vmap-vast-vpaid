@@ -96,6 +96,18 @@ module.exports = function VASTPlugin(options) {
 
     disable: function () {
       settings.adsEnabled = false;
+    },
+
+    settings: function(){
+      return settings;
+    },
+
+    resetSettings: function(options){
+      settings = utilities.extend({}, settings, options || {});
+    },
+
+    snapshot: function(){
+      return snapshot;
     }
   };
 

@@ -46,7 +46,7 @@ VMAPClient.prototype._parseVMAP = function(xmlStr, callback){
 VMAPClient.prototype.getResponse = function(adTagUrl, callback){
   async.waterfall([
     function(cb){
-      cb(null, adTagUrl, callback);
+      cb(null, adTagUrl);
     },
     this._requestVMAP,
     this._parseVMAP

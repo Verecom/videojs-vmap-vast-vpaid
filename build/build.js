@@ -52,7 +52,7 @@ gulp.task('clean', function (done) {
   if(isProduction){
     cleanDirs.push(config.DIST);
   }
-  del.sync(cleanDirs, {force: true});
+  del.sync([cleanDirs+"/*", "!"+cleanDirs+"/vmap.html","!"+cleanDirs+"/vmap_sample.xml", "!"+cleanDirs+"/*.xml"], {force: true});
   done();
 });
 
@@ -88,10 +88,14 @@ function buildProdJs() {
 
 
 gulp.task('build-scripts', function() {
-
-  var buildProcesses = config.versions.map(function(version) {
-
-    var fileName  = 'videojs_' + version + '.vast.vpaid.js';
+  var plugins = ['vast.vpaid.js','vmap.js'];
+  var scripts = [];
+  config.versions.forEach(function(v){
+    plugins.forEach(function(p){
+      scripts.push("videojs_"+v+'.'+p);
+    });
+  });
+  var buildProcesses = scripts.map(function(fileName) {
     var entryFile = path.join('src/scripts', fileName);
     var destPath  = path.join(devPath, 'scripts');
 
