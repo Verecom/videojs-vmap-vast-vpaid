@@ -53,9 +53,7 @@ module.exports = function VMAPPlugin(options) {
       initVastClient(vmap.adBreaksDict["start"]);
     }
     if (vmap.adBreaksDict.hasOwnProperty("end")){
-      player.on("ended", function(){
-        console.log("player is ended");
-      });
+      player.on("ended", playEndAdBreak);
     }
     callback(null);
   }
@@ -137,8 +135,15 @@ module.exports = function VMAPPlugin(options) {
         player.vast.resetSettings(vastAdTagSource);
         // player.trigger("vast.firstPlay");
         addAdBreakPlayRecord(adBreak, true);
-        player.play();
+        player.trigger('vast.playAd');
       }
+    }
+  }
+
+  function playEndAdBreak(){
+    var adBreak = vmap.adBreaksDict['end'];
+    if (!isAdBreakPlayed(adBreak)){
+      playAd(adBreak);
     }
   }
 

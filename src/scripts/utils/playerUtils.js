@@ -205,6 +205,7 @@ playerUtils.prepareForAds = function (player) {
   monkeyPatchPlayerApi();
 
   player.on('play', tryToTriggerFirstPlay);
+  player.on('vast.playAd', tryToTriggerFirstPlay);
   player.on('vast.reset', resetFirstPlay);//Every time we change the sources we reset the first play.
   player.on('vast.firstPlay', restoreContentVolume);
   player.on('error', hideBlackPoster);//If there is an error in the player we remove the blackposter to show the err msg
