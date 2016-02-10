@@ -40,33 +40,46 @@ config.versions.forEach(function(version) {
           os: 'OS X',
           os_version: 'Mountain Lion'
         },
-        bs_iphone5: {
+        bs_iphone6s: {
           base: 'BrowserStack',
-          device: 'iPhone 5',
+          device: 'iPhone 6S',
           os: 'ios',
-          os_version: '6.0'
+          os_version: '9.1'
+        },
+        bs_android_mobile: {
+          base: 'BrowserStack',
+          device: 'Samsung Galaxy S5',
+          os: 'android',
+          os_version: '4.4'
         }
       },
-      browsers: ['bs_firefox_mac'],
+      browsers: ['bs_android_mobile'],
       coverageReporter: {
-      reporters: [
-        {
-          type: 'text',
-          dir: 'coverage/',
-          file: 'coverage.txt'
-        },
-        {
-          type: 'html',
-          dir: 'coverage/'
-        },
-        {
-          type: 'lcovonly',
-          dir: 'coverage/',
-          subdir: '.'
-        },
-        {type: 'text-summary'}
-      ]
-    }
+        reporters: [
+          {
+            type: 'text',
+            dir: 'coverage/',
+            file: 'coverage.txt'
+          },
+          {
+            type: 'html',
+            dir: 'coverage/'
+          },
+          {
+            type: 'lcovonly',
+            dir: 'coverage/',
+            subdir: '.'
+          },
+          {type: 'text-summary'}
+        ]
+      },
+      specReporter: {
+        maxLogLines: 5,         // limit number of lines logged per test
+        suppressErrorSummary: false,  // do not print error summary
+        suppressFailed: false,  // do not print information about failed tests
+        suppressPassed: true,  // do not print information about passed tests
+        suppressSkipped: false  // do not print information about skipped tests
+      },
     }, function (error) {
       done(error);
     }).start();
