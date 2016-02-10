@@ -49,7 +49,6 @@ module.exports = function VMAPPlugin(options) {
     player.on('loadedmetadata', loadedmetadataEventHandler);
     player.on('timeupdate', timeupdateEventHnadler);
     if (vmap.adBreaksDict.hasOwnProperty("start")){
-      console.log(vmap.adBreaksDict["start"]);
       initVastClient(vmap.adBreaksDict["start"]);
     }
     if (vmap.adBreaksDict.hasOwnProperty("end")){
@@ -84,7 +83,6 @@ module.exports = function VMAPPlugin(options) {
 
   function timeupdateEventHnadler(){
     var currentPlayerTime = player.currentTime();
-    console.log(currentPlayerTime);
     if(!isAdPlaying()){
       var adBreak = getAdBreak(currentPlayerTime);
       if (adBreak && !isAdBreakPlayed(adBreak)){
@@ -129,11 +127,8 @@ module.exports = function VMAPPlugin(options) {
       var adSource = adBreak.adSource;
       if (adSource){
         player.trigger("vast.reset");
-        player.pause();
-
         var vastAdTagSource = getVastAdTagSource(adSource);
         player.vast.resetSettings(vastAdTagSource);
-        // player.trigger("vast.firstPlay");
         addAdBreakPlayRecord(adBreak, true);
         player.trigger('vast.playAd');
       }
@@ -179,11 +174,6 @@ module.exports = function VMAPPlugin(options) {
     settings = utilities.extend({}, options || {}, vastAdTagSource);
     player.vastClient(settings);
   }
-
-
-  // function getTagUrl(){
-  //   return vastTagUrl;
-  // }
 
   function trackAdError(type, error, vmapResponse) {
     player.trigger({type: type, error: error});
