@@ -66,6 +66,8 @@ module.exports = function VASTPlugin(options) {
     return trackAdError(new VASTError('on VideoJS VAST plugin, missing adTagUrl on options object'));
   }
 
+  vastUtil.runFlashSupportCheck(settings.vpaidFlashLoaderPath);// Necessary step for VPAIDFLASHClient to work.
+
   playerUtils.prepareForAds(player);
 
   if (settings.playAdAlways) {
@@ -114,6 +116,7 @@ module.exports = function VASTPlugin(options) {
     async.waterfall([
       checkAdsEnabled,
       preparePlayerForAd,
+      startAdCancelTimeout,
       playPrerollAd
     ], function (error, response) {
       if (error) {
@@ -167,8 +170,15 @@ module.exports = function VASTPlugin(options) {
         snapshot = playerUtils.getPlayerSnapshot(player);
         player.pause();
         addSpinnerIcon();
-        startAdCancelTimeout();
-        next(null);
+
+        if(player.paused()) {
+          next(null);
+        } else {
+          playerUtils.once(player, ['playing'], function() {
+            player.pause();
+            next(null);
+          });
+        }
       } else {
         next(new VASTError('video content has been playing before preroll ad'));
       }
@@ -178,7 +188,7 @@ module.exports = function VASTPlugin(options) {
       return !utilities.isIPhone() || player.currentTime() <= settings.iosPrerollCancelTimeout;
     }
 
-    function startAdCancelTimeout() {
+    function startAdCancelTimeout(next) {
       var adCancelTimeoutId;
       adsCanceled = false;
 
@@ -195,6 +205,8 @@ module.exports = function VASTPlugin(options) {
           adCancelTimeoutId = null;
         }
       }
+
+      next(null);
     }
 
     function addSpinnerIcon() {
@@ -250,6 +262,7 @@ module.exports = function VASTPlugin(options) {
       preventManualProgress();
     }
 
+    player.vast.vastResponse = vastResponse;
     player.vast.adUnit = adIntegrator.playAd(vastResponse, callback);
 
     /*** Local functions ****/
