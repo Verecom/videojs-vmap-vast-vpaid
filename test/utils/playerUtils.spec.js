@@ -450,17 +450,6 @@ describe("playerUtils.prepareForAds", function () {
             assert.equal(player.volume(), 1);
           });
 
-          it("must set the currentTime to 0 on 'vast.firstPlay' evt", function () {
-            var player = videojs(document.createElement('video'), {});
-            sinon.stub(player, 'currentTime');
-            sinon.assert.notCalled(player.currentTime);
-
-            playerUtils.prepareForAds(player);
-            player.play();
-            player.trigger('vast.firstPlay');
-            sinon.assert.calledWithExactly(player.currentTime, 0);
-          });
-
           it("must call player's play method", function () {
             var player = videojs(document.createElement('video'), {});
             var playStub = sinon.stub(player, 'play');

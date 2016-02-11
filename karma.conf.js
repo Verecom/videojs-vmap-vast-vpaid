@@ -14,7 +14,8 @@ module.exports = function (karma) {
     files: [
         defaultVideoJs,
         'test/test-utils.css',
-        'test/**/*.spec.js'
+        'test/**/*.spec.js',
+        { pattern: 'dev/*.xml', included: false }
     ],
     /**
      * This is the list of file patterns to load into the browser during testing.

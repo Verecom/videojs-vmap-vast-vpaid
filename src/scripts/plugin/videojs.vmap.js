@@ -31,15 +31,17 @@ module.exports = function VMAPPlugin(options) {
     return trackAdError(VMAPEvent.CONFIG_ERROR, new VMAPError('on VideoJS VAST plugin, missing adTagUrl on options object'));
   }
 
-  async.waterfall([
-    getVMAPResponse,
-    buildAdBreakTimeLine, 
-    touchPlayerEvents
-    ], function(error, result){
-      if (error) trackAdError(VMAPEvent.OTHER_ERROR, error);
-      console.log(result);
-    }
-  );
+  function run(){
+    async.waterfall([
+      getVMAPResponse,
+      buildAdBreakTimeLine, 
+      touchPlayerEvents
+      ], function(error, result){
+        if (error) trackAdError(VMAPEvent.OTHER_ERROR, error);
+        console.log(result);
+      }
+    );
+  }
 
   function getVMAPResponse(callback){
     vmap.getResponse(settings.adTagUrl ? settings.adTagUrl() : settings.adTagXML, callback);
@@ -57,15 +59,14 @@ module.exports = function VMAPPlugin(options) {
     callback(null);
   }
 
-
-
   function loadedmetadataEventHandler(){
     var videoLength = player.duration();
-    transformAdBreakTimeOffsets(videoLength);
+    timeOffsets = transformAdBreakTimeOffsets(videoLength);
+    return timeOffsets;
   }
 
-  // not tested
   function transformAdBreakTimeOffsets(videoLength){
+    var timeOffsets = {};
     Object.keys(vmap.adBreaksDict).forEach(function(timeOffset){
       var secs;
       if (/^\d{2}:\d{2}:\d{2}(\.\d{1,3})?$/.test(timeOffset)){
@@ -77,7 +78,7 @@ module.exports = function VMAPPlugin(options) {
         timeOffsets[secs] = timeOffset;
       }
     });
-    console.log("timeOffsets :", timeOffsets);
+    return timeOffsets;
   }
 
 
@@ -104,7 +105,6 @@ module.exports = function VMAPPlugin(options) {
     return player.vast && player.vast.adUnit;
   }
 
-  // not tested
   function getAdBreak(currentPlayerTime){
     var keys = Object.keys(timeOffsets);
     for(var i = 0, len = keys.length; i < len; i++){
@@ -170,7 +170,6 @@ module.exports = function VMAPPlugin(options) {
 
   function initVastClient(adBreak){
     var vastAdTagSource = getVastAdTagSource(adBreak.adSource); 
-    console.log(vastAdTagSource);
     settings = utilities.extend({}, options || {}, vastAdTagSource);
     player.vastClient(settings);
   }
@@ -180,6 +179,32 @@ module.exports = function VMAPPlugin(options) {
     if (console && console.log) {
       console.log('AD ERROR:', error.message, error, vmapResponse);
     }
+  }
+
+// make it easy for unit test
+  if (settings._unitTest !== true){
+    run();
+  }else{
+    // for unit test, return all the function require test
+    return {
+      getVMAPResponse: getVMAPResponse,
+      touchPlayerEvents: touchPlayerEvents,
+      loadedmetadataEventHandler: loadedmetadataEventHandler,
+      transformAdBreakTimeOffsets: transformAdBreakTimeOffsets,
+      timeupdateEventHnadler: timeupdateEventHnadler,
+      isAdBreakPlayed: isAdBreakPlayed,
+      isAdPlaying: isAdPlaying,
+      getAdBreak: getAdBreak,
+      playAd: playAd,
+      playEndAdBreak: playEndAdBreak,
+      addAdBreakPlayRecord: addAdBreakPlayRecord,
+      getVastAdTagSource: getVastAdTagSource,
+      initVastClient: initVastClient,
+      trackAdError: trackAdError,
+      setVmapClient: function(vmapClient){
+        vmap = vmapClient;
+      }
+    };
   }
   
 };
