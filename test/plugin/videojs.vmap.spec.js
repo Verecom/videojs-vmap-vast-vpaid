@@ -103,7 +103,7 @@ describe("videojs vmap plugin", function(){
         expect(spy.args[0][0]).to.be.null;
         expect(spy.args[0][1]).to.be.an.instanceof(VMAP);
         done();
-      }, 1000)
+      }, 1000);
     });
   });
 
@@ -113,7 +113,7 @@ describe("videojs vmap plugin", function(){
       var vmapStub = new VMAPClient();
       vmapStub.adBreaksDict = {
         "start": {}, "50%": {}, "00:00:08.123":{}, "00:00:10":{}
-      }
+      };
       vmapClient.setVmapClient(vmapStub);
       var timeOffsets = vmapClient.transformAdBreakTimeOffsets(30);
       expect(timeOffsets).to.contain.all.keys(['8', '10', '15']);
@@ -124,7 +124,7 @@ describe("videojs vmap plugin", function(){
     var vmapClient;
     before(function(){
       vmapClient = player.vmapClient({_unitTest: true, adTagUrl: 'http://fake.url'});
-    })
+    });
 
     context("adSource adTagURI is specify", function(){
       var adSource;
@@ -145,7 +145,7 @@ describe("videojs vmap plugin", function(){
         var adTagSource = vmapClient.getVastAdTagSource(adSource);
         expect(adTagSource.adTagUrl).to.be.null;
         expect(adTagSource.adTagXML).to.be.an.instanceof(Function);
-      })
+      });
     });
   });
 });
