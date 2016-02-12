@@ -84,7 +84,8 @@ module.exports = {
     dependencies.push(videoJsVersionsMap[videojsVersion] + 'video.js');
     return dependencies.concat([
       'test/test-utils.css',
-      'test/**/*.spec.js'
+      'test/**/*.spec.js',
+      { pattern: 'dev/*.xml', included: false }
     ]);
   },
 
