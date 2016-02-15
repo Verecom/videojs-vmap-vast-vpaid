@@ -45,9 +45,15 @@ config.versions.forEach(function(version) {
           device: 'iPhone 5',
           os: 'ios',
           os_version: '6.0'
+        },
+        bs_android_44:{
+          base: 'BrowserStack',
+          device: 'Samsung Galaxy S5',
+          os: 'android',
+          os_version: '4.4'
         }
       },
-      browsers: ['bs_firefox_mac'],
+      browsers: ['bs_android_44'],
       coverageReporter: {
       reporters: [
         {
