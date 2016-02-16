@@ -17,8 +17,13 @@ function HttpRequest(createXhr) {
   this.createXhr = createXhr;
 }
 
-HttpRequest.prototype.run = function (method, url, callback, options) {
-  sanityCheck(url, callback, options);
+HttpRequest.prototype.unescapeUrl = function(url){
+  return url.replace(/&amp;/g, '&');
+};
+
+HttpRequest.prototype.run = function (method, rawUrl, callback, options) {
+  sanityCheck(rawUrl, callback, options);
+  var url = HttpRequest.prototype.unescapeUrl.call(null, rawUrl);
   var timeout, timeoutId;
   var xhr = this.createXhr();
   options = options || {};

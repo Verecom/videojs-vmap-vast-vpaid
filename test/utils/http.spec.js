@@ -5,6 +5,12 @@ var utilities = require('utils/utilityFunctions');
 var testUtils = require('../test-utils');
 
 describe("HttpRequest", function () {
+  it("unescapeUrl should replace &amp; by &", function(){
+    var oldUrl = "http://fake.url?a=1&amp;b=2&amp;c=3";
+    var newUrl = HttpRequest.prototype.unescapeUrl.call(null, oldUrl);
+    assert.equal(newUrl, "http://fake.url?a=1&b=2&c=3");
+  });
+
   it("must throw an exception if you don't pass a xhrFactory function", function () {
     assert.throws(function () {
       /*jshint unused:false*/
