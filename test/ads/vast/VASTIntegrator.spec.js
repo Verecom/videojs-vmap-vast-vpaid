@@ -101,6 +101,7 @@ describe("VASTIntegrator", function () {
         assert.isNotNull(skipButton(player));
         assert.isNotNull(clickThroughAnchor(player));
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
         player.trigger('ended');
         player.trigger('vast.adEnd');
@@ -396,6 +397,7 @@ describe("VASTIntegrator", function () {
         vastIntegrator._playSelectedAd(mediaFile, response, callback);
         //when the ad is ready to play there is a durationchange event
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
 
         sinon.assert.calledOnce(spy);
@@ -406,6 +408,7 @@ describe("VASTIntegrator", function () {
         player.on('vast.adStart', spy);
         vastIntegrator._playSelectedAd(mediaFile, response, callback);
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
 
         sinon.assert.calledOnce(spy);
@@ -426,6 +429,7 @@ describe("VASTIntegrator", function () {
         sinon.assert.notCalled(player.play);
 
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         sinon.assert.calledOnce(player.play);
       });
 
@@ -434,6 +438,7 @@ describe("VASTIntegrator", function () {
         sinon.stub(player, 'duration').returns(10);
         sinon.stub(player, 'currentTime').returns(9);
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
         player.trigger('ended');
         sinon.assert.calledWithExactly(callback, null, response);
@@ -444,6 +449,7 @@ describe("VASTIntegrator", function () {
         sinon.stub(player, 'duration').returns(10);
         sinon.stub(player, 'currentTime').returns(1);
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
         player.trigger('ended');
         sinon.assert.notCalled(callback);
@@ -452,6 +458,7 @@ describe("VASTIntegrator", function () {
       it("must on 'vast.adSkip' evt, call the callback with the response and no error", function () {
         vastIntegrator._playSelectedAd(mediaFile, response, callback);
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
         player.trigger('vast.adSkip');
         sinon.assert.calledWithExactly(callback, null, response);
@@ -474,6 +481,7 @@ describe("VASTIntegrator", function () {
         player.on('vast.adStart', spy);
         vastIntegrator._playSelectedAd(mediaFile, response, callback);
         player.trigger('durationchange');
+        player.trigger('loadedmetadata');
         player.trigger('playing');
         player.trigger('vast.adsCancel');
         player.trigger('ended');

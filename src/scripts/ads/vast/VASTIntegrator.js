@@ -305,8 +305,8 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd(source, respo
   player.preload("auto"); //without preload=auto the durationchange event is never fired
   player.src(source);
 
-  playerUtils.once(player, ['durationchange', 'error', 'vast.adsCancel'], function (evt) {
-    if (evt.type === 'durationchange') {
+  playerUtils.once(player, ['loadedmetadata', 'error', 'vast.adsCancel'], function (evt) {
+    if (evt.type === 'loadedmetadata') {
       playAd();
     } else if(evt.type === 'error') {
       callback(new VASTError("on VASTIntegrator, Player is unable to play the Ad", 400), response);
