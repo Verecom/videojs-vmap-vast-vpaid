@@ -52,7 +52,7 @@ gulp.task('clean', function (done) {
   if(isProduction){
     cleanDirs.push(config.DIST);
   }
-  del.sync([cleanDirs+"/*", "!"+cleanDirs+"/vmap.html","!"+cleanDirs+"/vmap_sample.xml", "!"+cleanDirs+"/*.xml"], {force: true});
+  del.sync([cleanDirs+"/*", "!"+cleanDirs+"/*.html", "!"+cleanDirs+"/*.xml"], {force: true});
   done();
 });
 
