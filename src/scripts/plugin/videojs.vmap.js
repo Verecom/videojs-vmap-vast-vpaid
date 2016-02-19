@@ -9,6 +9,7 @@ module.exports = function VMAPPlugin(options) {
   var vmap = new VMAPClient();
   var timeOffsets = {}; 
   var adBreakPlayRecord = {};
+  var videoLength = 0;
   var defaultOpts = {
     //request adTagUrl timeout 
     timeout: 500
@@ -48,8 +49,9 @@ module.exports = function VMAPPlugin(options) {
   }
 
   function touchPlayerEvents(_ , callback){
-    player.on('loadedmetadata', loadedmetadataEventHandler);
-    player.on('timeupdate', timeupdateEventHnadler);
+    player.on('loadedmetadata', scheduleTimeOffsets); // loadedmetadata sometimes doesn't load video duration
+    player.on('timeupdate', scheduleTimeOffsets);
+    player.on('timeupdate', timeupdateEventHandler);
     if (vmap.adBreaksDict.hasOwnProperty("start")){
       initVastClient(vmap.adBreaksDict["start"]);
     }
@@ -59,9 +61,21 @@ module.exports = function VMAPPlugin(options) {
     callback(null);
   }
 
-  function loadedmetadataEventHandler(){
-    var videoLength = player.duration();
-    timeOffsets = transformAdBreakTimeOffsets(videoLength);
+  function scheduleTimeOffsets(event){
+    console.log(event.type);
+    if (!isAdPlaying()){
+      videoLength = player.duration();
+      console.log(videoLength);
+      var isProperTime = videoLength > 0;
+      if (event.type === "timeupdate") 
+        isProperTime =  isProperTime && player.currentTime() > 0;
+      if (isProperTime) {
+        timeOffsets = transformAdBreakTimeOffsets(videoLength);
+        player.off('loadedmetadata', scheduleTimeOffsets);
+        player.off('timeupdate', scheduleTimeOffsets);
+        console.log(timeOffsets);
+      }
+    } 
     return timeOffsets;
   }
 
@@ -82,7 +96,7 @@ module.exports = function VMAPPlugin(options) {
   }
 
 
-  function timeupdateEventHnadler(){
+  function timeupdateEventHandler(){
     var currentPlayerTime = player.currentTime();
     if(!isAdPlaying()){
       var adBreak = getAdBreak(currentPlayerTime);
@@ -109,6 +123,8 @@ module.exports = function VMAPPlugin(options) {
     var keys = Object.keys(timeOffsets);
     for(var i = 0, len = keys.length; i < len; i++){
       if (Math.round(keys[i]) == Math.round(currentPlayerTime)){
+        console.log("current player time: ", currentPlayerTime);
+        console.log("adBreak time: ", Math.round(keys[i]));
         return vmap.adBreaksDict[timeOffsets[keys[i]]];
       }
     }
@@ -189,9 +205,9 @@ module.exports = function VMAPPlugin(options) {
     return {
       getVMAPResponse: getVMAPResponse,
       touchPlayerEvents: touchPlayerEvents,
-      loadedmetadataEventHandler: loadedmetadataEventHandler,
+      scheduleTimeOffsets: scheduleTimeOffsets,
       transformAdBreakTimeOffsets: transformAdBreakTimeOffsets,
-      timeupdateEventHnadler: timeupdateEventHnadler,
+      timeupdateEventHandler: timeupdateEventHandler,
       isAdBreakPlayed: isAdBreakPlayed,
       isAdPlaying: isAdPlaying,
       getAdBreak: getAdBreak,
